@@ -1,0 +1,32 @@
+{
+  "name": "rozeegpt-qa-suite",
+  "version": "1.0.0",
+  "description": "Browser QA automation suite for betaqa.rozeegpt.ai — Team Management & Roles",
+  "scripts": {
+    "test": "npx playwright test --reporter=list",
+    "test:setup": "npx playwright test tests/00-setup.spec.js",
+    "test:team": "npx playwright test tests/01-team-load.spec.js",
+    "test:search": "npx playwright test tests/02-search-filter.spec.js",
+    "test:invite": "npx playwright test tests/03-invite.spec.js",
+    "test:pending": "npx playwright test tests/04-pending.spec.js",
+    "test:departments": "npx playwright test tests/05-departments.spec.js",
+    "test:members": "npx playwright test tests/06-member-actions.spec.js",
+    "test:roles": "npx playwright test tests/07-roles.spec.js",
+    "test:negative": "npx playwright test tests/08-negative.spec.js",
+    "test:cleanup": "npx playwright test tests/09-cleanup.spec.js",
+    "test:report": "npx playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:36877/git/khalidmajeed2004/rozeegpt"
+  },
+  "keywords": ["qa", "playwright", "automation"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.61.0"
+  },
+  "dependencies": {
+    "puppeteer": "^25.1.0"
+  }
+}
