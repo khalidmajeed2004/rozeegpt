@@ -30,8 +30,8 @@ Additionally, **pagination is broken** across all tabs — it needs to work corr
 ## Source Code Locations
 
 The two repos are at:
-- **Frontend:** H:/dev/rozeegpt-core/rozeegptapp02/
-- **Backend API:** H:/dev/rozeegpt-core/rozeegpt/
+- **Frontend:** /private/var/www/naseeb/projects/rozeegpt-core/rozeegptapp02/
+- **Backend API:** /private/var/www/naseeb/projects/rozeegpt-core/rozeegpt/
 
 ## What to Investigate
 
