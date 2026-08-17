@@ -15,14 +15,14 @@ MIME={'.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.svg':'image/
 #   'invert' — flip a black-on-transparent mark to white (monochrome marks only)
 #   'plate'  — sit the logo on a white rounded plate (correct for colour marks)
 #   'none'   — the mark already reads on a dark ground
-DARK_MODE={'rozeegpt':'invert', 'efulife':'plate'}
+DARK_MODE={'rozeegpt':'invert', 'efulife':'none'}
 
 def logo(stem, fallback):
     for ext in ('.svg','.png','.jpg','.jpeg','.webp'):
         f=pathlib.Path('logos')/(stem+ext)
         if f.exists():
             b64=base64.b64encode(f.read_bytes()).decode()
-            cls='logo-img dk-'+DARK_MODE.get(stem,'plate')
+            cls=f'logo-img lg-{stem} dk-'+DARK_MODE.get(stem,'plate')
             return (f'<img class="{cls}" src="data:{MIME[ext]};base64,{b64}" '
                     f'alt="{stem} logo">')
     return fallback
@@ -47,11 +47,14 @@ EXTRA='''
 .cover{display:flex;flex-direction:column;justify-content:space-between;gap:44px;
   background:var(--card);border:1px solid var(--rule);border-radius:14px;
   padding:38px 40px 32px;box-shadow:var(--shadow);min-height:520px}
-.crest{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
-.crest .slot{display:flex;flex-direction:column;gap:7px;min-width:150px}
+.crest{display:flex;align-items:stretch;gap:26px;flex-wrap:wrap}
+.crest .slot{display:flex;flex-direction:column;gap:9px;min-width:150px}
+.crest .mark{display:flex;align-items:center;height:60px}
 .crest .role{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);font-weight:660}
-.crest .divider{width:1px;align-self:stretch;background:var(--rule);min-height:44px}
-.logo-img{max-height:46px;max-width:190px;width:auto;height:auto;object-fit:contain;display:block}
+.crest .divider{width:1px;align-self:stretch;background:var(--rule)}
+.logo-img{width:auto;height:auto;object-fit:contain;display:block}
+.lg-rozeegpt{max-height:46px;max-width:218px}
+.lg-efulife{max-height:60px;max-width:60px}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dk-invert{filter:invert(1)}
   :root:not([data-theme="light"]) .dk-plate{background:#fff;border-radius:6px;padding:5px 8px}}
 :root[data-theme="dark"] .dk-invert{filter:invert(1)}
@@ -79,7 +82,9 @@ EXTRA='''
   .cover h1{font-size:32px} .cover .lede{font-size:12.5px}
   .duration .dv{font-size:13px}
   .cover-meta dd{font-size:10.5px}
-  .logo-img{max-height:40px}
+  .crest .mark{height:54px}
+  .lg-rozeegpt{max-height:42px;max-width:200px}
+  .lg-efulife{max-height:54px;max-width:54px}
 }
 </style>'''
 
@@ -90,9 +95,9 @@ HTML=f'''<title>EFU Utilisation Statement</title>
 
 <section class="cover">
   <div class="crest">
-    <div class="slot"><span class="role">Prepared by</span>{ROZEE}</div>
+    <div class="slot"><span class="role">Prepared by</span><span class="mark">{ROZEE}</span></div>
     <div class="divider"></div>
-    <div class="slot"><span class="role">Prepared for</span>{EFU}</div>
+    <div class="slot"><span class="role">Prepared for</span><span class="mark">{EFU}</span></div>
   </div>
 
   <div class="cover-foot">
@@ -114,7 +119,7 @@ HTML=f'''<title>EFU Utilisation Statement</title>
       <div><dt>Credits utilised</dt><dd>{D['used']} ({D['util']}%)</dd></div>
       <div><dt>Unique users</dt><dd>{D['users']}</dd></div>
       <div><dt>KPIs generated</dt><dd>{D['kpis']:,}</dd></div>
-      <div><dt>Data source</dt><dd>efukpidataaug2026.xlsx</dd></div>
+      <div><dt>Active days</dt><dd>{D['active_days']}</dd></div>
       <div><dt>Prepared</dt><dd>17 Aug 2026</dd></div>
     </dl>
   </div>
@@ -192,9 +197,9 @@ HTML=f'''<title>EFU Utilisation Statement</title>
   <span class="eyebrow">Basis of preparation</span>
   <ul>
     <li><strong>Credit = one KPI-generation request.</strong> {D['used']} requests were submitted; {D['success']} returned KPIs and {D['failed']} returned none. Utilisation is stated on all {D['used']} requests; on successful requests only it is {D['success']} ({D['util_success']}%).</li>
-    <li><strong>Credits purchased (500)</strong> is a contract figure supplied separately — the raw data sheet holds no balance or commercial fields.</li>
-    <li><strong>Users</strong> are distinct email addresses in the <code>KPIs</code> sheet. All {D['used']} requests sit under <code>company_id 630</code> on the efulife.com domain.</li>
-    <li>Figures cover {D['first']} to {D['last']}. KPI detail for Sep–Oct 2025 is not present in the <code>Data</code> sheet, so those two months show 8 requests with no KPI rows.</li>
+    <li><strong>Credits purchased (500)</strong> is a contract figure supplied separately; it does not form part of the platform's usage records.</li>
+    <li><strong>Users</strong> are distinct email addresses recorded against the account. All {D['used']} requests sit under the EFU Life account on the efulife.com domain.</li>
+    <li>Figures are drawn from KPI Generator usage records for the EFU Life account and cover {D['first']} to {D['last']}. KPI-level detail is unavailable for Sep–Oct 2025, so those two months show 8 requests with no KPI breakdown.</li>
   </ul>
 </div>
 

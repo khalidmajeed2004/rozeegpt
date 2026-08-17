@@ -1,17 +1,25 @@
-# Logo slots
+# Cover logos
 
-Drop the real brand files in here and re-run `python3 page.py && node shot.js`.
-Each is embedded into the HTML as a base64 data URI — the report must stay
-self-contained, so external image URLs will not load.
+`rozeegpt.svg` and `efulife.svg` are rebuilt by `make_logos.py`. Wordmarks are
+converted from live font outlines into vector paths, so the files carry no font
+dependency and render identically in the browser and in print.
 
-| File | Slot |
-|---|---|
-| `rozeegpt.svg` (or `.png` / `.jpg` / `.webp`) | "Prepared by" |
-| `efulife.svg` (or `.png` / `.jpg` / `.webp`) | "Prepared for" |
+```
+pip install fonttools brotli
+npm i @fontsource/poppins          # FDIR in make_logos.py points at the install
+python3 make_logos.py
+```
 
-`.svg` is preferred, then `.png` with a transparent background. Logos render at
-up to 46px tall and 190px wide, aspect ratio preserved. With no file present the
-cover falls back to a typographic lockup.
+`page.py` embeds whatever it finds here as a base64 data URI — the report must
+stay self-contained, so external image URLs will not load. Replacing either file
+(`.svg`, `.png`, `.jpg` or `.webp` all work) and re-running the build swaps the
+mark with no other changes.
+
+## Sizing
+
+Each mark is sized on its own, so a wide wordmark and a square app icon balance
+optically rather than sharing one cap: see `.lg-rozeegpt` and `.lg-efulife` in
+`page.py`. Both sit in a fixed-height box so the two slots share a centre line.
 
 ## Dark mode
 
@@ -19,9 +27,10 @@ The cover card is near-black in dark mode, so `DARK_MODE` in `page.py` sets the
 treatment per logo:
 
 - `invert` — flips a black-on-transparent mark to white. Monochrome marks only.
-- `plate` — sits the logo on a white rounded plate. Correct for colour marks.
+- `plate` — sits the logo on a white rounded plate. For a colour mark with a
+  transparent background.
 - `none` — the mark already reads on a dark ground.
 
 Current settings: `rozeegpt` → `invert` (the wordmark is solid black),
-`efulife` → `plate` (the mark is teal). Print always uses the untouched
-original.
+`efulife` → `none` (the app icon carries its own white ground). Print always
+uses the untouched original.

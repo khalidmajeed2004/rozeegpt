@@ -8,6 +8,9 @@ Utilisation report for EFU Life's use of the Rozee KPI Generator, built from
 - `efu-utilisation-summary.html` — the report (responsive, light/dark, print-ready)
 - `EFU-Utilisation-Summary.pdf` — 3-page A4 print version (cover + 2 content pages)
 
+The report itself does not name the source file; it attributes figures to KPI
+Generator usage records for the account.
+
 ## Regenerating
 
 ```
@@ -22,7 +25,7 @@ node shot.js         # -> EFU-Utilisation-Summary.pdf (needs playwright + chromi
 count. That figure is supplied separately — the raw sheet carries no balance
 or commercial fields.
 
-Real brand logos go in `logos/` — see `logos/README.md`.
+Cover logos are built by `make_logos.py` into `logos/` — see `logos/README.md`.
 
 ## Counting basis
 
