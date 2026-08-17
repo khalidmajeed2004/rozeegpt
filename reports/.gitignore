@@ -1,0 +1,5 @@
+# intermediate build output
+data.json
+charts.json
+shot-*.png
+pdf-*.png
