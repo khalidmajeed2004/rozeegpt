@@ -1,0 +1,214 @@
+{
+ "purchased": 500,
+ "used": 852,
+ "success": 838,
+ "failed": 14,
+ "kpis": 3694,
+ "users": 93,
+ "util": 170.4,
+ "over": 352,
+ "exh_date": "10 Jun 2026",
+ "active_days": 98,
+ "first": "30 Sep 2025",
+ "last": "21 Jul 2026",
+ "months": [
+  {
+   "m": "2025-09",
+   "lbl": "Sep 25",
+   "req": 4,
+   "users": 1,
+   "new_users": 1,
+   "cum_users": 1,
+   "kpis": 0,
+   "cum": 4,
+   "util": 0.8
+  },
+  {
+   "m": "2025-10",
+   "lbl": "Oct 25",
+   "req": 4,
+   "users": 1,
+   "new_users": 1,
+   "cum_users": 2,
+   "kpis": 0,
+   "cum": 8,
+   "util": 1.6
+  },
+  {
+   "m": "2025-11",
+   "lbl": "Nov 25",
+   "req": 18,
+   "users": 4,
+   "new_users": 2,
+   "cum_users": 4,
+   "kpis": 87,
+   "cum": 26,
+   "util": 5.2
+  },
+  {
+   "m": "2025-12",
+   "lbl": "Dec 25",
+   "req": 31,
+   "users": 5,
+   "new_users": 2,
+   "cum_users": 6,
+   "kpis": 152,
+   "cum": 57,
+   "util": 11.4
+  },
+  {
+   "m": "2026-01",
+   "lbl": "Jan 26",
+   "req": 47,
+   "users": 9,
+   "new_users": 6,
+   "cum_users": 12,
+   "kpis": 263,
+   "cum": 104,
+   "util": 20.8
+  },
+  {
+   "m": "2026-02",
+   "lbl": "Feb 26",
+   "req": 77,
+   "users": 23,
+   "new_users": 19,
+   "cum_users": 31,
+   "kpis": 462,
+   "cum": 181,
+   "util": 36.2
+  },
+  {
+   "m": "2026-03",
+   "lbl": "Mar 26",
+   "req": 17,
+   "users": 8,
+   "new_users": 3,
+   "cum_users": 34,
+   "kpis": 97,
+   "cum": 198,
+   "util": 39.6
+  },
+  {
+   "m": "2026-04",
+   "lbl": "Apr 26",
+   "req": 34,
+   "users": 6,
+   "new_users": 4,
+   "cum_users": 38,
+   "kpis": 140,
+   "cum": 232,
+   "util": 46.4
+  },
+  {
+   "m": "2026-05",
+   "lbl": "May 26",
+   "req": 48,
+   "users": 13,
+   "new_users": 8,
+   "cum_users": 46,
+   "kpis": 167,
+   "cum": 280,
+   "util": 56.0
+  },
+  {
+   "m": "2026-06",
+   "lbl": "Jun 26",
+   "req": 564,
+   "users": 60,
+   "new_users": 45,
+   "cum_users": 91,
+   "kpis": 2278,
+   "cum": 844,
+   "util": 168.8
+  },
+  {
+   "m": "2026-07",
+   "lbl": "Jul 26",
+   "req": 8,
+   "users": 4,
+   "new_users": 2,
+   "cum_users": 93,
+   "kpis": 48,
+   "cum": 852,
+   "util": 170.4
+  }
+ ],
+ "top_users": [
+  {
+   "u": "aqsaraees",
+   "req": 73,
+   "kpis": 363,
+   "span": "Sep 25 \u2013 Jun 26"
+  },
+  {
+   "u": "murwahtariq",
+   "req": 69,
+   "kpis": 299,
+   "span": "Feb 26 \u2013 Jun 26"
+  },
+  {
+   "u": "muhammadriaz",
+   "req": 53,
+   "kpis": 212,
+   "span": "Jun 26 \u2013 Jun 26"
+  },
+  {
+   "u": "syedburair",
+   "req": 36,
+   "kpis": 147,
+   "span": "Jun 26 \u2013 Jun 26"
+  },
+  {
+   "u": "samreenmustafa",
+   "req": 35,
+   "kpis": 150,
+   "span": "Oct 25 \u2013 Jun 26"
+  },
+  {
+   "u": "zainsidhu",
+   "req": 34,
+   "kpis": 146,
+   "span": "Jun 26 \u2013 Jun 26"
+  },
+  {
+   "u": "waqasmalik",
+   "req": 28,
+   "kpis": 74,
+   "span": "Jun 26 \u2013 Jun 26"
+  },
+  {
+   "u": "syedtahir",
+   "req": 24,
+   "kpis": 88,
+   "span": "Jun 26 \u2013 Jun 26"
+  },
+  {
+   "u": "sunyaali",
+   "req": 23,
+   "kpis": 47,
+   "span": "Jun 26 \u2013 Jun 26"
+  },
+  {
+   "u": "muhammadmessum",
+   "req": 20,
+   "kpis": 80,
+   "span": "Jan 26 \u2013 Jun 26"
+  }
+ ],
+ "buckets": {
+  "1": 11,
+  "2\u20134": 35,
+  "5\u20139": 22,
+  "10\u201319": 15,
+  "20+": 10
+ },
+ "median": 5,
+ "ten_plus": 25,
+ "top10share": 46.4,
+ "top20share": 64.1,
+ "jun": 564,
+ "jun_new_users": 45,
+ "avg_kpi": 4.4,
+ "util_success": 167.6
+}
