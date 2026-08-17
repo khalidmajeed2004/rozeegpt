@@ -188,6 +188,11 @@ footer{border-top:1px solid var(--rule);padding-top:12px;font-size:11px;color:va
 .crest .role{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);font-weight:660}
 .crest .divider{width:1px;align-self:stretch;background:var(--rule);min-height:44px}
 .logo-img{max-height:46px;max-width:190px;width:auto;height:auto;object-fit:contain;display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dk-invert{filter:invert(1)}
+  :root:not([data-theme="light"]) .dk-plate{background:#fff;border-radius:6px;padding:5px 8px}}
+:root[data-theme="dark"] .dk-invert{filter:invert(1)}
+:root[data-theme="dark"] .dk-plate{background:#fff;border-radius:6px;padding:5px 8px}
+@media print{.dk-invert{filter:none}.dk-plate{background:none;padding:0}}
 .wordmark{font-size:25px;font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--ink)}
 .wm-a{color:var(--blue)} .wm-b{color:var(--mute);font-weight:500;margin-left:.16em}
 .cover-foot{display:flex;flex-direction:column;gap:30px}
@@ -218,7 +223,7 @@ footer{border-top:1px solid var(--rule);padding-top:12px;font-size:11px;color:va
 
 <section class="cover">
   <div class="crest">
-    <div class="slot"><span class="role">Prepared by</span><span class="wordmark">rozee<span class="wm-a">GPT</span></span></div>
+    <div class="slot"><span class="role">Prepared by</span><span class="wordmark">rozeegpt<span class="wm-a">.ai</span></span></div>
     <div class="divider"></div>
     <div class="slot"><span class="role">Prepared for</span><span class="wordmark">EFU<span class="wm-b">Life</span></span></div>
   </div>

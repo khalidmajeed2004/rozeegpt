@@ -9,15 +9,25 @@ def esc(s): return str(s).replace('&','&amp;').replace('<','&lt;').replace('>','
 # Drop a real logo file into logos/ (rozeegpt.* / efulife.*) and re-run; it is
 # embedded as a data URI. Without one, a typographic lockup is used instead.
 MIME={'.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.svg':'image/svg+xml','.webp':'image/webp'}
+
+# Dark-mode treatment per logo. The cover card is near-black in dark mode, so a
+# dark monochrome logo needs help:
+#   'invert' — flip a black-on-transparent mark to white (monochrome marks only)
+#   'plate'  — sit the logo on a white rounded plate (correct for colour marks)
+#   'none'   — the mark already reads on a dark ground
+DARK_MODE={'rozeegpt':'invert', 'efulife':'plate'}
+
 def logo(stem, fallback):
     for ext in ('.svg','.png','.jpg','.jpeg','.webp'):
         f=pathlib.Path('logos')/(stem+ext)
         if f.exists():
             b64=base64.b64encode(f.read_bytes()).decode()
-            return f'<img class="logo-img" src="data:{MIME[ext]};base64,{b64}" alt="{stem} logo">'
+            cls='logo-img dk-'+DARK_MODE.get(stem,'plate')
+            return (f'<img class="{cls}" src="data:{MIME[ext]};base64,{b64}" '
+                    f'alt="{stem} logo">')
     return fallback
 
-ROZEE=logo('rozeegpt','<span class="wordmark">rozee<span class="wm-a">GPT</span></span>')
+ROZEE=logo('rozeegpt','<span class="wordmark">rozeegpt<span class="wm-a">.ai</span></span>')
 EFU=logo('efulife','<span class="wordmark">EFU<span class="wm-b">Life</span></span>')
 
 mrows=''.join(
@@ -42,6 +52,11 @@ EXTRA='''
 .crest .role{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);font-weight:660}
 .crest .divider{width:1px;align-self:stretch;background:var(--rule);min-height:44px}
 .logo-img{max-height:46px;max-width:190px;width:auto;height:auto;object-fit:contain;display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dk-invert{filter:invert(1)}
+  :root:not([data-theme="light"]) .dk-plate{background:#fff;border-radius:6px;padding:5px 8px}}
+:root[data-theme="dark"] .dk-invert{filter:invert(1)}
+:root[data-theme="dark"] .dk-plate{background:#fff;border-radius:6px;padding:5px 8px}
+@media print{.dk-invert{filter:none}.dk-plate{background:none;padding:0}}
 .wordmark{font-size:25px;font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--ink)}
 .wm-a{color:var(--blue)} .wm-b{color:var(--mute);font-weight:500;margin-left:.16em}
 .cover-foot{display:flex;flex-direction:column;gap:30px}
