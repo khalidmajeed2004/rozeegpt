@@ -43,48 +43,83 @@ urows=''.join(
 
 EXTRA='''
 <style>
-/* --- cover page --- */
-.cover{display:flex;flex-direction:column;justify-content:space-between;gap:44px;
-  background:var(--card);border:1px solid var(--rule);border-radius:14px;
-  padding:38px 40px 32px;box-shadow:var(--shadow);min-height:520px}
+/* --- cover page ---------------------------------------------------------
+   The cover commits to one dark treatment in both themes, so every colour
+   here is literal rather than tokenised. Everything past it stays quiet. */
+.cover{--cv-ink:#f2f6f9; --cv-mute:#8fa3b8; --cv-line:rgba(255,255,255,.12);
+  position:relative;overflow:hidden;isolation:isolate;
+  display:flex;flex-direction:column;gap:26px;
+  background:#0d1319;border-radius:16px;padding:38px 40px 0;
+  color:var(--cv-ink);min-height:560px;
+  box-shadow:0 2px 4px rgba(0,0,0,.18),0 22px 50px -26px rgba(0,0,0,.55)}
+/* faint plot rules bleeding behind the whole panel */
+.cover::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(120% 80% at 82% 4%,rgba(57,135,229,.16),transparent 62%),
+             radial-gradient(90% 60% at 6% 96%,rgba(224,102,97,.10),transparent 66%)}
+
 .crest{display:flex;align-items:stretch;gap:26px;flex-wrap:wrap}
 .crest .slot{display:flex;flex-direction:column;gap:9px;min-width:150px}
-.crest .mark{display:flex;align-items:center;height:60px}
-.crest .role{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);font-weight:660}
-.crest .divider{width:1px;align-self:stretch;background:var(--rule)}
+.crest .mark{display:flex;align-items:center;height:56px}
+.crest .role{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--cv-mute);font-weight:660}
+.crest .divider{width:1px;align-self:stretch;background:var(--cv-line)}
 .logo-img{width:auto;height:auto;object-fit:contain;display:block}
-.lg-rozeegpt{max-height:46px;max-width:218px}
-.lg-efulife{max-height:60px;max-width:60px}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dk-invert{filter:invert(1)}
-  :root:not([data-theme="light"]) .dk-plate{background:#fff;border-radius:6px;padding:5px 8px}}
-:root[data-theme="dark"] .dk-invert{filter:invert(1)}
-:root[data-theme="dark"] .dk-plate{background:#fff;border-radius:6px;padding:5px 8px}
-@media print{.dk-invert{filter:none}.dk-plate{background:none;padding:0}}
-.wordmark{font-size:25px;font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--ink)}
-.wm-a{color:var(--blue)} .wm-b{color:var(--mute);font-weight:500;margin-left:.16em}
-.cover-foot{display:flex;flex-direction:column;gap:30px}
-.cover-body{display:flex;flex-direction:column;gap:14px}
-.cover h1{font-size:40px;line-height:1.08;letter-spacing:-.028em}
-.cover .lede{font-size:15px;color:var(--ink-2);max-width:52ch}
-.duration{display:inline-flex;align-items:baseline;gap:11px;align-self:flex-start;
-  background:var(--band);color:var(--band-ink);border-radius:9px;padding:11px 17px;margin-top:4px}
-.duration .dl{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:#8fa3b8;font-weight:660}
-.duration .dv{font-family:var(--mono);font-size:16px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-.cover-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 22px;
-  border-top:1px solid var(--rule);padding-top:16px}
-.cover-meta dt{font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);font-weight:660}
-.cover-meta dd{margin:2px 0 0;font-family:var(--mono);font-size:12.5px;color:var(--ink)}
-@media (max-width:680px){.cover{padding:26px 22px;min-height:0}.cover h1{font-size:29px}
-  .cover-meta{grid-template-columns:repeat(2,1fr)}.crest .divider{display:none}}
+.lg-rozeegpt{max-height:42px;max-width:206px;filter:invert(1)}
+.lg-efulife{max-height:56px;max-width:56px;border-radius:12px}
+.wordmark{font-size:25px;font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--cv-ink)}
+.wm-a{color:#5b9bec} .wm-b{color:var(--cv-mute);font-weight:500;margin-left:.16em}
+
+.cover-body{display:flex;flex-direction:column;gap:15px;margin-top:auto}
+.cv-lede{font-size:14px;line-height:1.55;color:var(--cv-mute);max-width:44ch;margin:-2px 0 2px}
+.cover .eyebrow{color:var(--cv-mute);letter-spacing:.16em}
+.cover h1{font-size:44px;line-height:1.06;letter-spacing:-.032em;font-weight:690;
+  color:var(--cv-ink);text-wrap:initial}
+.cover h1 em{font-style:normal;color:var(--cv-mute);font-weight:400}
+.period{display:inline-flex;align-items:center;gap:14px;align-self:flex-start;
+  border:1px solid var(--cv-line);border-radius:999px;padding:8px 18px 8px 14px}
+.period .pl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--cv-mute);font-weight:660}
+.period .pv{font-family:var(--mono);font-size:13px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.period .pd{color:var(--cv-mute);margin:0 7px}
+
+/* the burn curve, bleeding to both edges */
+.curve{display:flex;flex-direction:column-reverse;gap:12px;margin:4px -40px 0}
+.curve>svg{display:block;width:100%;height:172px}
+.curve-tag{display:flex;align-items:center;gap:9px;margin-left:40px;font-size:9px;
+  letter-spacing:.14em;text-transform:uppercase;font-weight:680;color:#e88b87}
+.curve-tag::before{content:"";width:22px;height:2px;border-radius:1px;background:#e06661}
+
+.cover-figures{display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--cv-line);margin:0 -40px;padding:0 40px}
+.cf{display:flex;flex-direction:column;gap:4px;padding:16px 0 22px;position:relative}
+.cf+.cf{padding-left:22px}
+.cf+.cf::before{content:"";position:absolute;left:0;top:16px;bottom:22px;width:1px;background:var(--cv-line)}
+.cfl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--cv-mute);font-weight:660}
+.cfv{font-family:var(--mono);font-size:26px;line-height:1.05;letter-spacing:-.035em;font-weight:600;
+  display:flex;align-items:baseline;gap:9px}
+.cf.over .cfv{color:#f08984}
+.cfv em{font-style:normal;font-size:12px;letter-spacing:-.01em;color:var(--cv-mute);font-weight:500}
+
+@media (max-width:680px){
+  .cover{padding:26px 22px 0;min-height:0;gap:20px}
+  .cover h1{font-size:30px}
+  .cv-lede{font-size:13px}
+  .curve{margin:4px -22px 0} .curve>svg{height:120px} .curve-tag{margin-left:22px}
+  .cover-figures{grid-template-columns:repeat(2,1fr);margin:0 -22px;padding:0 22px}
+  .cf+.cf{padding-left:0} .cf+.cf::before{display:none}
+  .cf:nth-child(even){padding-left:22px}
+  .cf:nth-child(even)::before{content:"";position:absolute;left:0;top:16px;bottom:22px;width:1px;background:var(--cv-line);display:block}
+  .crest .divider{display:none}
+}
 @media print{
-  .cover{min-height:273mm;padding:30px 32px;break-after:page;box-shadow:none}
-  .cover-foot{gap:24px}
-  .cover h1{font-size:32px} .cover .lede{font-size:12.5px}
-  .duration .dv{font-size:13px}
-  .cover-meta dd{font-size:10.5px}
-  .crest .mark{height:54px}
-  .lg-rozeegpt{max-height:42px;max-width:200px}
-  .lg-efulife{max-height:54px;max-width:54px}
+  .cover{min-height:271mm;padding:30px 34px 0;break-after:page;border-radius:14px;
+    box-shadow:none;gap:20px}
+  .cover h1{font-size:37px}
+  .cv-lede{font-size:12px;max-width:46ch}
+  .crest .mark{height:52px}
+  .lg-rozeegpt{max-height:39px;max-width:192px}
+  .lg-efulife{max-height:52px;max-width:52px}
+  .curve{margin:4px -34px 0} .curve>svg{height:232px} .curve-tag{margin-left:34px}
+  .cover-figures{margin:0 -34px;padding:0 34px}
+  .cfv{font-size:24px}
 }
 </style>'''
 
@@ -100,28 +135,27 @@ HTML=f'''<title>EFU Utilisation Statement</title>
     <div class="slot"><span class="role">Prepared for</span><span class="mark">{EFU}</span></div>
   </div>
 
-  <div class="cover-foot">
-    <div class="cover-body">
-      <div class="eyebrow">Account Utilisation Report</div>
-      <h1>KPI Generator credit utilisation &amp; user summary</h1>
-      <p class="lede">Consumption of EFU Life's contracted credit balance, month by
-        month, with the number of users who generated KPIs over the period.</p>
-      <div class="duration">
-        <span class="dl">Report period</span>
-        <span class="dv">{D['first']} — {D['last']}</span>
-      </div>
+  <div class="cover-body">
+    <div class="eyebrow">Account Utilisation Report</div>
+    <h1>KPI Generator<br>credit utilisation<br><em>&amp; user summary</em></h1>
+    <p class="cv-lede">Consumption of EFU Life's contracted credit balance, month by month,
+      alongside the number of users generating KPIs across the period.</p>
+    <div class="period">
+      <span class="pl">Report period</span>
+      <span class="pv">{D['first']}<span class="pd">—</span>{D['last']}</span>
     </div>
+  </div>
 
-    <dl class="cover-meta">
-      <div><dt>Account</dt><dd>EFU Life</dd></div>
-      <div><dt>Company ID</dt><dd>630</dd></div>
-      <div><dt>Credits purchased</dt><dd>500</dd></div>
-      <div><dt>Credits utilised</dt><dd>{D['used']} ({D['util']}%)</dd></div>
-      <div><dt>Unique users</dt><dd>{D['users']}</dd></div>
-      <div><dt>KPIs generated</dt><dd>{D['kpis']:,}</dd></div>
-      <div><dt>Active days</dt><dd>{D['active_days']}</dd></div>
-      <div><dt>Prepared</dt><dd>17 Aug 2026</dd></div>
-    </dl>
+  <div class="curve">
+    {C['cover']}
+    <span class="curve-tag">Balance exhausted {D['exh_date']}</span>
+  </div>
+
+  <div class="cover-figures">
+    <div class="cf"><span class="cfl">Credits purchased</span><span class="cfv">500</span></div>
+    <div class="cf over"><span class="cfl">Credits utilised</span><span class="cfv">{D['used']}<em>{D['util']}%</em></span></div>
+    <div class="cf"><span class="cfl">Unique users</span><span class="cfv">{D['users']}</span></div>
+    <div class="cf"><span class="cfl">KPIs generated</span><span class="cfv">{D['kpis']:,}</span></div>
   </div>
 </section>
 

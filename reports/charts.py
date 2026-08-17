@@ -115,6 +115,50 @@ def chart_d():
     o.append('</svg>')
     return ''.join(o)
 
-CH=dict(a=chart_a(),b=chart_b(),c=chart_c(),d=chart_d())
+
+# ---------- Cover: the burn curve as an editorial graphic ----------
+# Same data and same encoding as chart A (blue within balance, red beyond), but
+# stripped of axes and set to bleed off both edges of the cover panel.
+def chart_cover():
+    W,H=760,250; x0,x1,y0,y1=-26,742,26,206; ymax=900
+    n=len(M); dx=(x1-x0)/(n-1)
+    X=lambda i:x0+dx*i; Y=lambda v:y1-(y1-y0)*v/ymax
+    pts=[(X(i),Y(m['cum'])) for i,m in enumerate(M)]
+    line=' '.join(f'{"M" if i==0 else "L"}{x:.1f},{y:.1f}' for i,(x,y) in enumerate(pts))
+    lx,ly=pts[-1]
+    area=line+f' L{W},{ly:.1f} L{W},{y1+60} L{x0:.1f},{y1+60} Z'
+    yth=Y(P)
+    o=[f'<svg viewBox="0 0 {W} {H}" preserveAspectRatio="none" aria-hidden="true" focusable="false">']
+    o.append('<defs>'
+             '<linearGradient id="cvIn" x1="0" y1="0" x2="0" y2="1">'
+             '<stop offset="0" stop-color="#3987e5" stop-opacity=".42"/>'
+             '<stop offset="1" stop-color="#3987e5" stop-opacity="0"/></linearGradient>'
+             '<linearGradient id="cvOv" x1="0" y1="0" x2="0" y2="1">'
+             '<stop offset="0" stop-color="#e06661" stop-opacity=".46"/>'
+             '<stop offset="1" stop-color="#e06661" stop-opacity="0"/></linearGradient>'
+             f'<clipPath id="cvA"><rect x="{x0}" y="{yth:.1f}" width="{W-x0+40}" height="{y1-yth+60:.1f}"/></clipPath>'
+             f'<clipPath id="cvB"><rect x="{x0}" y="0" width="{W-x0+40}" height="{yth:.1f}"/></clipPath>'
+             '</defs>')
+    # hairline rules at each gridline, very quiet
+    for i in range(1,6):
+        y=y1-(y1-y0)*i/6
+        o.append(f'<line x1="0" y1="{y:.1f}" x2="{W}" y2="{y:.1f}" stroke="#fff" stroke-opacity=".05"/>')
+    o.append(f'<path d="{area}" fill="url(#cvIn)" clip-path="url(#cvA)"/>')
+    o.append(f'<path d="{area}" fill="url(#cvOv)" clip-path="url(#cvB)"/>')
+    o.append(f'<line x1="0" y1="{yth:.1f}" x2="{W}" y2="{yth:.1f}" stroke="#8fa3b8" stroke-width="1.2" stroke-dasharray="6 5" stroke-opacity=".75"/>')
+    o.append(f'<path d="{line}" fill="none" stroke="#3987e5" stroke-width="3" stroke-linejoin="round" clip-path="url(#cvA)"/>')
+    o.append(f'<path d="{line}" fill="none" stroke="#e06661" stroke-width="3" stroke-linejoin="round" clip-path="url(#cvB)"/>')
+    # the crossing point, where the balance runs out
+    xi=next(i for i,m in enumerate(M) if m['cum']>P)
+    prev,cur=M[xi-1]['cum'],M[xi]['cum']
+    xe=X(xi-1)+dx*(P-prev)/(cur-prev)
+    o.append(f'<circle cx="{xe:.1f}" cy="{yth:.1f}" r="9" fill="#e06661" fill-opacity=".22"/>')
+    o.append(f'<circle cx="{xe:.1f}" cy="{yth:.1f}" r="4.2" fill="#e06661"/>')
+    o.append(f'<line x1="{pts[-1][0]:.1f}" y1="{pts[-1][1]:.1f}" x2="{W}" y2="{pts[-1][1]:.1f}" stroke="#e06661" stroke-width="3"/>')
+    o.append(f'<circle cx="{pts[-1][0]:.1f}" cy="{pts[-1][1]:.1f}" r="4.6" fill="#e06661"/>')
+    o.append('</svg>')
+    return ''.join(o)
+
+CH=dict(cover=chart_cover(), a=chart_a(),b=chart_b(),c=chart_c(),d=chart_d())
 json.dump(CH,open('charts.json','w'))
 print('ok', {x:len(v) for x,v in CH.items()})

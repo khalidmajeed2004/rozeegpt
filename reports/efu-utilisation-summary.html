@@ -179,48 +179,83 @@ footer{border-top:1px solid var(--rule);padding-top:12px;font-size:11px;color:va
 @page{size:A4;margin:10mm 10mm 8mm}
 </style>
 <style>
-/* --- cover page --- */
-.cover{display:flex;flex-direction:column;justify-content:space-between;gap:44px;
-  background:var(--card);border:1px solid var(--rule);border-radius:14px;
-  padding:38px 40px 32px;box-shadow:var(--shadow);min-height:520px}
+/* --- cover page ---------------------------------------------------------
+   The cover commits to one dark treatment in both themes, so every colour
+   here is literal rather than tokenised. Everything past it stays quiet. */
+.cover{--cv-ink:#f2f6f9; --cv-mute:#8fa3b8; --cv-line:rgba(255,255,255,.12);
+  position:relative;overflow:hidden;isolation:isolate;
+  display:flex;flex-direction:column;gap:26px;
+  background:#0d1319;border-radius:16px;padding:38px 40px 0;
+  color:var(--cv-ink);min-height:560px;
+  box-shadow:0 2px 4px rgba(0,0,0,.18),0 22px 50px -26px rgba(0,0,0,.55)}
+/* faint plot rules bleeding behind the whole panel */
+.cover::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(120% 80% at 82% 4%,rgba(57,135,229,.16),transparent 62%),
+             radial-gradient(90% 60% at 6% 96%,rgba(224,102,97,.10),transparent 66%)}
+
 .crest{display:flex;align-items:stretch;gap:26px;flex-wrap:wrap}
 .crest .slot{display:flex;flex-direction:column;gap:9px;min-width:150px}
-.crest .mark{display:flex;align-items:center;height:60px}
-.crest .role{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);font-weight:660}
-.crest .divider{width:1px;align-self:stretch;background:var(--rule)}
+.crest .mark{display:flex;align-items:center;height:56px}
+.crest .role{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--cv-mute);font-weight:660}
+.crest .divider{width:1px;align-self:stretch;background:var(--cv-line)}
 .logo-img{width:auto;height:auto;object-fit:contain;display:block}
-.lg-rozeegpt{max-height:46px;max-width:218px}
-.lg-efulife{max-height:60px;max-width:60px}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dk-invert{filter:invert(1)}
-  :root:not([data-theme="light"]) .dk-plate{background:#fff;border-radius:6px;padding:5px 8px}}
-:root[data-theme="dark"] .dk-invert{filter:invert(1)}
-:root[data-theme="dark"] .dk-plate{background:#fff;border-radius:6px;padding:5px 8px}
-@media print{.dk-invert{filter:none}.dk-plate{background:none;padding:0}}
-.wordmark{font-size:25px;font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--ink)}
-.wm-a{color:var(--blue)} .wm-b{color:var(--mute);font-weight:500;margin-left:.16em}
-.cover-foot{display:flex;flex-direction:column;gap:30px}
-.cover-body{display:flex;flex-direction:column;gap:14px}
-.cover h1{font-size:40px;line-height:1.08;letter-spacing:-.028em}
-.cover .lede{font-size:15px;color:var(--ink-2);max-width:52ch}
-.duration{display:inline-flex;align-items:baseline;gap:11px;align-self:flex-start;
-  background:var(--band);color:var(--band-ink);border-radius:9px;padding:11px 17px;margin-top:4px}
-.duration .dl{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:#8fa3b8;font-weight:660}
-.duration .dv{font-family:var(--mono);font-size:16px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-.cover-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 22px;
-  border-top:1px solid var(--rule);padding-top:16px}
-.cover-meta dt{font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);font-weight:660}
-.cover-meta dd{margin:2px 0 0;font-family:var(--mono);font-size:12.5px;color:var(--ink)}
-@media (max-width:680px){.cover{padding:26px 22px;min-height:0}.cover h1{font-size:29px}
-  .cover-meta{grid-template-columns:repeat(2,1fr)}.crest .divider{display:none}}
+.lg-rozeegpt{max-height:42px;max-width:206px;filter:invert(1)}
+.lg-efulife{max-height:56px;max-width:56px;border-radius:12px}
+.wordmark{font-size:25px;font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--cv-ink)}
+.wm-a{color:#5b9bec} .wm-b{color:var(--cv-mute);font-weight:500;margin-left:.16em}
+
+.cover-body{display:flex;flex-direction:column;gap:15px;margin-top:auto}
+.cv-lede{font-size:14px;line-height:1.55;color:var(--cv-mute);max-width:44ch;margin:-2px 0 2px}
+.cover .eyebrow{color:var(--cv-mute);letter-spacing:.16em}
+.cover h1{font-size:44px;line-height:1.06;letter-spacing:-.032em;font-weight:690;
+  color:var(--cv-ink);text-wrap:initial}
+.cover h1 em{font-style:normal;color:var(--cv-mute);font-weight:400}
+.period{display:inline-flex;align-items:center;gap:14px;align-self:flex-start;
+  border:1px solid var(--cv-line);border-radius:999px;padding:8px 18px 8px 14px}
+.period .pl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--cv-mute);font-weight:660}
+.period .pv{font-family:var(--mono);font-size:13px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.period .pd{color:var(--cv-mute);margin:0 7px}
+
+/* the burn curve, bleeding to both edges */
+.curve{display:flex;flex-direction:column-reverse;gap:12px;margin:4px -40px 0}
+.curve>svg{display:block;width:100%;height:172px}
+.curve-tag{display:flex;align-items:center;gap:9px;margin-left:40px;font-size:9px;
+  letter-spacing:.14em;text-transform:uppercase;font-weight:680;color:#e88b87}
+.curve-tag::before{content:"";width:22px;height:2px;border-radius:1px;background:#e06661}
+
+.cover-figures{display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--cv-line);margin:0 -40px;padding:0 40px}
+.cf{display:flex;flex-direction:column;gap:4px;padding:16px 0 22px;position:relative}
+.cf+.cf{padding-left:22px}
+.cf+.cf::before{content:"";position:absolute;left:0;top:16px;bottom:22px;width:1px;background:var(--cv-line)}
+.cfl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--cv-mute);font-weight:660}
+.cfv{font-family:var(--mono);font-size:26px;line-height:1.05;letter-spacing:-.035em;font-weight:600;
+  display:flex;align-items:baseline;gap:9px}
+.cf.over .cfv{color:#f08984}
+.cfv em{font-style:normal;font-size:12px;letter-spacing:-.01em;color:var(--cv-mute);font-weight:500}
+
+@media (max-width:680px){
+  .cover{padding:26px 22px 0;min-height:0;gap:20px}
+  .cover h1{font-size:30px}
+  .cv-lede{font-size:13px}
+  .curve{margin:4px -22px 0} .curve>svg{height:120px} .curve-tag{margin-left:22px}
+  .cover-figures{grid-template-columns:repeat(2,1fr);margin:0 -22px;padding:0 22px}
+  .cf+.cf{padding-left:0} .cf+.cf::before{display:none}
+  .cf:nth-child(even){padding-left:22px}
+  .cf:nth-child(even)::before{content:"";position:absolute;left:0;top:16px;bottom:22px;width:1px;background:var(--cv-line);display:block}
+  .crest .divider{display:none}
+}
 @media print{
-  .cover{min-height:273mm;padding:30px 32px;break-after:page;box-shadow:none}
-  .cover-foot{gap:24px}
-  .cover h1{font-size:32px} .cover .lede{font-size:12.5px}
-  .duration .dv{font-size:13px}
-  .cover-meta dd{font-size:10.5px}
-  .crest .mark{height:54px}
-  .lg-rozeegpt{max-height:42px;max-width:200px}
-  .lg-efulife{max-height:54px;max-width:54px}
+  .cover{min-height:271mm;padding:30px 34px 0;break-after:page;border-radius:14px;
+    box-shadow:none;gap:20px}
+  .cover h1{font-size:37px}
+  .cv-lede{font-size:12px;max-width:46ch}
+  .crest .mark{height:52px}
+  .lg-rozeegpt{max-height:39px;max-width:192px}
+  .lg-efulife{max-height:52px;max-width:52px}
+  .curve{margin:4px -34px 0} .curve>svg{height:232px} .curve-tag{margin-left:34px}
+  .cover-figures{margin:0 -34px;padding:0 34px}
+  .cfv{font-size:24px}
 }
 </style>
 
@@ -233,28 +268,27 @@ footer{border-top:1px solid var(--rule);padding-top:12px;font-size:11px;color:va
     <div class="slot"><span class="role">Prepared for</span><span class="mark"><img class="logo-img lg-efulife dk-none" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkVGVSBMaWZlIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExNCIgZmlsbD0iI2ZmZiIvPjxjaXJjbGUgY3g9IjI1Ni4wIiBjeT0iMjMyIiByPSIxNjMiIGZpbGw9IiMxMjc5OEQiLz48Y2lyY2xlIGN4PSIyNTYuMCIgY3k9IjIzMiIgcj0iMTQ2IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIgb3BhY2l0eT0iLjkiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMTguNSwyOTAuMCkiPjxwYXRoIGQ9Ik0xMDMuNjYzOTk5OTk5OTk5OTkgLTYxLjA3MTk5OTk5OTk5OTk5NlExMDMuNjYzOTk5OTk5OTk5OTkgLTU1LjQ0IDEwMi43ODM5OTk5OTk5OTk5OSAtNTEuMDRRMTAxLjcyOCAtNDUuNzYgMTAwLjQ5NiAtNDEuODg4SDI5LjIxNTk5OTk5OTk5OTk5OFEyOS4wNCAtNDAuNjU2IDI5LjA0IC0zOC4zNjc5OTk5OTk5OTk5OTVRMjkuMDQgLTI5LjIxNTk5OTk5OTk5OTk5OCAzNC40MDggLTI0LjAyMzk5OTk5OTk5OTk5N1EzOS43NzU5OTk5OTk5OTk5OTYgLTE4LjgzMTk5OTk5OTk5OTk5NyA0OC41NzYgLTE4LjgzMTk5OTk5OTk5OTk5N1E1NS45Njc5OTk5OTk5OTk5OTYgLTE4LjgzMTk5OTk5OTk5OTk5NyA2MS4zMzYgLTIyLjA4Nzk5OTk5OTk5OTk5N1E2Ni43MDQgLTI1LjM0Mzk5OTk5OTk5OTk5OCA3MC4wNDggLTMwLjYyNEg5Ni42MjRROTAuMTEyIC0xNi41NDQgNzYuNDcyIC03LjQ4UTYyLjgzMTk5OTk5OTk5OTk5NCAxLjU4Mzk5OTk5OTk5OTk5OTkgNDUuNTgzOTk5OTk5OTk5OTk2IDEuNTgzOTk5OTk5OTk5OTk5OVEyNi45Mjc5OTk5OTk5OTk5OTcgMS41ODM5OTk5OTk5OTk5OTk5IDE1LjY2Mzk5OTk5OTk5OTk5OCAtOC45NzU5OTk5OTk5OTk5OTlRNC4zOTk5OTk5OTk5OTk5OTk1IC0xOS41MzU5OTk5OTk5OTk5OTggNC4zOTk5OTk5OTk5OTk5OTk1IC0zNy42NjM5OTk5OTk5OTk5OTRRNC4zOTk5OTk5OTk5OTk5OTk1IC00Mi45NDM5OTk5OTk5OTk5OTYgNS40NTU5OTk5OTk5OTk5OTk1IC00OC43NTE5OTk5OTk5OTk5OTVROC4wOTYgLTYzLjg4OCAxNi4yOCAtNzUuMzI4UTI0LjQ2NCAtODYuNzY4IDM2LjYwOCAtOTIuOTI4UTQ4Ljc1MTk5OTk5OTk5OTk5NSAtOTkuMDg4IDYzLjE4NCAtOTkuMDg4UTgxLjgzOTk5OTk5OTk5OTk5IC05OS4wODggOTIuNzUxOTk5OTk5OTk5OTggLTg4Ljc5MlExMDMuNjYzOTk5OTk5OTk5OTkgLTc4LjQ5NiAxMDMuNjYzOTk5OTk5OTk5OTkgLTYxLjA3MTk5OTk5OTk5OTk5NlpNNzguNjcyIC02MC44OTU5OTk5OTk5OTk5OTRRNzguNjcyIC02OS4zNDQgNzMuMjE2IC03NC4wOTZRNjcuNzU5OTk5OTk5OTk5OTkgLTc4Ljg0OCA1OC45NTk5OTk5OTk5OTk5OTQgLTc4Ljg0OFE0OS42MzIgLTc4Ljg0OCA0Mi4yMzk5OTk5OTk5OTk5OTUgLTcyLjk1MlEzNC44NDggLTY3LjA1NiAzMS44NTU5OTk5OTk5OTk5OTggLTU2Ljg0OEg3OC4zMlE3OC42NzIgLTU5LjY2Mzk5OTk5OTk5OTk5NCA3OC42NzIgLTYwLjg5NTk5OTk5OTk5OTk5NFogTTE3NS44MjM5OTk5OTk5OTk5OCAtMTM2Ljc1MTk5OTk5OTk5OTk4IDE3Mi4zMDM5OTk5OTk5OTk5NyAtMTE1Ljk4NFExNjMuNTA0IC0xMTYuMTYgMTU5LjI3OTk5OTk5OTk5OTk3IC0xMTIuOTkxOTk5OTk5OTk5OTlRMTU1LjA1NTk5OTk5OTk5OTk4IC0xMDkuODI0IDE1My42NDggLTEwMS41NTE5OTk5OTk5OTk5OUwxNTIuOTQ0IC05Ny41MDM5OTk5OTk5OTk5OUgxNzAuMDE2TDE2Ni40OTU5OTk5OTk5OTk5OCAtNzcuMjY0SDE0OS40MjM5OTk5OTk5OTk5OEwxMzUuNjk2IDAuMEgxMTAuODhMMTI0LjYwNzk5OTk5OTk5OTk5IC03Ny4yNjRIMTEzLjM0NEwxMTYuODYzOTk5OTk5OTk5OTkgLTk3LjUwMzk5OTk5OTk5OTk5SDEyOC4xMjhMMTI5LjAwNzk5OTk5OTk5OTk4IC0xMDIuNDMxOTk5OTk5OTk5OTlRMTMyLjE3NiAtMTIwLjM4Mzk5OTk5OTk5OTk5IDE0My43OTE5OTk5OTk5OTk5NyAtMTI4LjgzMlExNTUuNDA4IC0xMzcuMjggMTc1LjgyMzk5OTk5OTk5OTk4IC0xMzYuNzUxOTk5OTk5OTk5OThaIE0yNzQuNTYgLTk3LjUwMzk5OTk5OTk5OTk5IDI1Ny4zMTIgMC4wSDIzMi42NzE5OTk5OTk5OTk5N0wyMzQuNzg0IC0xMi4zMTk5OTk5OTk5OTk5OTlRMjI5LjE1MiAtNS45ODQgMjIwLjg4IC0yLjM3NlEyMTIuNjA4IDEuMjMyIDIwMy40NTYgMS4yMzJRMTg4LjMyIDEuMjMyIDE3OS41MTk5OTk5OTk5OTk5OCAtNi45NTJRMTcwLjcyIC0xNS4xMzYgMTcwLjcyIC0zMC4yNzJRMTcwLjcyIC0zNS45MDM5OTk5OTk5OTk5OTYgMTcxLjYgLTQwLjMwMzk5OTk5OTk5OTk5NUwxODEuNjMyIC05Ny41MDM5OTk5OTk5OTk5OUgyMDYuMjcyTDE5Ni43Njc5OTk5OTk5OTk5NyAtNDMuODI0UTE5Ni4yMzk5OTk5OTk5OTk5OCAtNDAuNjU2IDE5Ni4yMzk5OTk5OTk5OTk5OCAtMzcuNjYzOTk5OTk5OTk5OTk0UTE5Ni4yMzk5OTk5OTk5OTk5OCAtMjkuMDQgMjAwLjk5MTk5OTk5OTk5OTk2IC0yNC4zNzU5OTk5OTk5OTk5OThRMjA1Ljc0Mzk5OTk5OTk5OTk3IC0xOS43MTIgMjE0LjM2OCAtMTkuNzEyUTIyNC4zOTk5OTk5OTk5OTk5OCAtMTkuNzEyIDIzMS40NCAtMjUuOTZRMjM4LjQ4IC0zMi4yMDggMjQwLjQxNiAtNDMuODI0TDI0OS45MiAtOTcuNTAzOTk5OTk5OTk5OTlaIiBmaWxsPSIjZmZmIi8+PC9nPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE2Ni42LDQ5MS4wKSI+PHBhdGggZD0iTTIwLjAzNzk5OTk5OTk5OTk5NyAtMTEuMzUxOTk5OTk5OTk5OTk5SDM5LjMwMlYwLjBINS4zMzJWLTYwLjM3MTk5OTk5OTk5OTk5SDIwLjAzNzk5OTk5OTk5OTk5N1ogTTY1Ljc4OTk5OTk5OTk5OTk5IC02MC4zNzE5OTk5OTk5OTk5OVYwLjBINTEuMDgzOTk5OTk5OTk5OTk2Vi02MC4zNzE5OTk5OTk5OTk5OVogTTEyMC40ODU5OTk5OTk5OTk5OSAtNjAuMzcxOTk5OTk5OTk5OTlWLTQ4LjU4OTk5OTk5OTk5OTk5Nkg5NS44ODk5OTk5OTk5OTk5OVYtMzUuODYxOTk5OTk5OTk5OTk1SDExNC4yOTM5OTk5OTk5OTk5OFYtMjQuNDI0SDk1Ljg4OTk5OTk5OTk5OTk5VjAuMEg4MS4xODM5OTk5OTk5OTk5OFYtNjAuMzcxOTk5OTk5OTk5OTlaIE0xNDcuNjYxOTk5OTk5OTk5OTggLTQ4LjU4OTk5OTk5OTk5OTk5NlYtMzYuMzc4SDE2Ny4zNTZWLTI1LjAyNTk5OTk5OTk5OTk5NkgxNDcuNjYxOTk5OTk5OTk5OThWLTExLjc4MTk5OTk5OTk5OTk5OEgxNjkuOTM1OTk5OTk5OTk5OThWMC4wSDEzMi45NTZWLTYwLjM3MTk5OTk5OTk5OTk5SDE2OS45MzU5OTk5OTk5OTk5OFYtNDguNTg5OTk5OTk5OTk5OTk2WiIgZmlsbD0iIzEyNzk4RCIvPjwvZz48L3N2Zz4=" alt="efulife logo"></span></div>
   </div>
 
-  <div class="cover-foot">
-    <div class="cover-body">
-      <div class="eyebrow">Account Utilisation Report</div>
-      <h1>KPI Generator credit utilisation &amp; user summary</h1>
-      <p class="lede">Consumption of EFU Life's contracted credit balance, month by
-        month, with the number of users who generated KPIs over the period.</p>
-      <div class="duration">
-        <span class="dl">Report period</span>
-        <span class="dv">30 Sep 2025 — 21 Jul 2026</span>
-      </div>
+  <div class="cover-body">
+    <div class="eyebrow">Account Utilisation Report</div>
+    <h1>KPI Generator<br>credit utilisation<br><em>&amp; user summary</em></h1>
+    <p class="cv-lede">Consumption of EFU Life's contracted credit balance, month by month,
+      alongside the number of users generating KPIs across the period.</p>
+    <div class="period">
+      <span class="pl">Report period</span>
+      <span class="pv">30 Sep 2025<span class="pd">—</span>21 Jul 2026</span>
     </div>
+  </div>
 
-    <dl class="cover-meta">
-      <div><dt>Account</dt><dd>EFU Life</dd></div>
-      <div><dt>Company ID</dt><dd>630</dd></div>
-      <div><dt>Credits purchased</dt><dd>500</dd></div>
-      <div><dt>Credits utilised</dt><dd>852 (170.4%)</dd></div>
-      <div><dt>Unique users</dt><dd>93</dd></div>
-      <div><dt>KPIs generated</dt><dd>3,694</dd></div>
-      <div><dt>Active days</dt><dd>98</dd></div>
-      <div><dt>Prepared</dt><dd>17 Aug 2026</dd></div>
-    </dl>
+  <div class="curve">
+    <svg viewBox="0 0 760 250" preserveAspectRatio="none" aria-hidden="true" focusable="false"><defs><linearGradient id="cvIn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3987e5" stop-opacity=".42"/><stop offset="1" stop-color="#3987e5" stop-opacity="0"/></linearGradient><linearGradient id="cvOv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e06661" stop-opacity=".46"/><stop offset="1" stop-color="#e06661" stop-opacity="0"/></linearGradient><clipPath id="cvA"><rect x="-26" y="106.0" width="826" height="160.0"/></clipPath><clipPath id="cvB"><rect x="-26" y="0" width="826" height="106.0"/></clipPath></defs><line x1="0" y1="176.0" x2="760" y2="176.0" stroke="#fff" stroke-opacity=".05"/><line x1="0" y1="146.0" x2="760" y2="146.0" stroke="#fff" stroke-opacity=".05"/><line x1="0" y1="116.0" x2="760" y2="116.0" stroke="#fff" stroke-opacity=".05"/><line x1="0" y1="86.0" x2="760" y2="86.0" stroke="#fff" stroke-opacity=".05"/><line x1="0" y1="56.0" x2="760" y2="56.0" stroke="#fff" stroke-opacity=".05"/><path d="M-26.0,205.2 L50.8,204.4 L127.6,200.8 L204.4,194.6 L281.2,185.2 L358.0,169.8 L434.8,166.4 L511.6,159.6 L588.4,150.0 L665.2,37.2 L742.0,35.6 L760,35.6 L760,266 L-26.0,266 Z" fill="url(#cvIn)" clip-path="url(#cvA)"/><path d="M-26.0,205.2 L50.8,204.4 L127.6,200.8 L204.4,194.6 L281.2,185.2 L358.0,169.8 L434.8,166.4 L511.6,159.6 L588.4,150.0 L665.2,37.2 L742.0,35.6 L760,35.6 L760,266 L-26.0,266 Z" fill="url(#cvOv)" clip-path="url(#cvB)"/><line x1="0" y1="106.0" x2="760" y2="106.0" stroke="#8fa3b8" stroke-width="1.2" stroke-dasharray="6 5" stroke-opacity=".75"/><path d="M-26.0,205.2 L50.8,204.4 L127.6,200.8 L204.4,194.6 L281.2,185.2 L358.0,169.8 L434.8,166.4 L511.6,159.6 L588.4,150.0 L665.2,37.2 L742.0,35.6" fill="none" stroke="#3987e5" stroke-width="3" stroke-linejoin="round" clip-path="url(#cvA)"/><path d="M-26.0,205.2 L50.8,204.4 L127.6,200.8 L204.4,194.6 L281.2,185.2 L358.0,169.8 L434.8,166.4 L511.6,159.6 L588.4,150.0 L665.2,37.2 L742.0,35.6" fill="none" stroke="#e06661" stroke-width="3" stroke-linejoin="round" clip-path="url(#cvB)"/><circle cx="618.4" cy="106.0" r="9" fill="#e06661" fill-opacity=".22"/><circle cx="618.4" cy="106.0" r="4.2" fill="#e06661"/><line x1="742.0" y1="35.6" x2="760" y2="35.6" stroke="#e06661" stroke-width="3"/><circle cx="742.0" cy="35.6" r="4.6" fill="#e06661"/></svg>
+    <span class="curve-tag">Balance exhausted 10 Jun 2026</span>
+  </div>
+
+  <div class="cover-figures">
+    <div class="cf"><span class="cfl">Credits purchased</span><span class="cfv">500</span></div>
+    <div class="cf over"><span class="cfl">Credits utilised</span><span class="cfv">852<em>170.4%</em></span></div>
+    <div class="cf"><span class="cfl">Unique users</span><span class="cfv">93</span></div>
+    <div class="cf"><span class="cfl">KPIs generated</span><span class="cfv">3,694</span></div>
   </div>
 </section>
 
